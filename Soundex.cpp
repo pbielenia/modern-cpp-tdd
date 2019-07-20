@@ -11,7 +11,8 @@ std::string tdd::Soundex::head(const std::string& word) const
     return word.substr(0, 1);
 }
 
-std::string tdd::Soundex::tail(const std::string& word) const {
+std::string tdd::Soundex::tail(const std::string& word) const
+{
     return word.substr(1);
 }
 
@@ -35,12 +36,20 @@ std::string tdd::Soundex::encodedDigits(const std::string& word) const
     std::string encoding;
     for (auto letter : word) {
         if (isComplete(encoding)) break;
-        encoding += encodedDigit(letter);
+        if (encodedDigit(letter) != lastDigit(encoding))
+            encoding += encodedDigit(letter);
     }
     return encoding;
 }
 
-std::string tdd::Soundex::zeroPad(const std::string& word) const {
+std::string tdd::Soundex::lastDigit(const std::string& encoding) const
+{
+    if (encoding.empty()) return "";
+    else return std::string(1, encoding.back());
+}
+
+std::string tdd::Soundex::zeroPad(const std::string& word) const
+{
     auto zerosNeeded = max_code_length - word.length();
     return word + std::string(zerosNeeded, '0');
 }
