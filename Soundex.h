@@ -12,7 +12,10 @@ public:
     std::string encodedDigit(char letter) const;
 private:
     static const size_t max_code_length{4};
+    const std::string NotADigit{"*"};
 
+    std::string upperFront(const std::string& string) const;
+    char lower(char c) const;
     std::string head(const std::string& word) const;
     std::string tail(const std::string& word) const;
     std::string encodedDigits(const std::string& word) const;

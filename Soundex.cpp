@@ -3,7 +3,17 @@
 
 std::string tdd::Soundex::encode(const std::string& word) const
 {
-    return zeroPad(head(word) + encodedDigits(tail(word)));
+    return zeroPad(upperFront(head(word)) + encodedDigits(tail(word)));
+}
+
+std::string tdd::Soundex::upperFront(const std::string& string) const
+{
+    return std::string(1, std::toupper(static_cast<unsigned char>(string.front())));
+}
+
+char tdd::Soundex::lower(char c) const
+{
+    return std::tolower(static_cast<unsigned char>(c));
 }
 
 std::string tdd::Soundex::head(const std::string& word) const
@@ -27,8 +37,8 @@ std::string tdd::Soundex::encodedDigit(char letter) const
         {'m', "5"}, {'n', "5"},
         {'r', "6"}
     };
-    auto it = encodings.find(letter);
-    return it == encodings.end() ? "" : it->second;
+    auto it = encodings.find(lower(letter));
+    return it == encodings.end() ? NotADigit : it->second;
 }
 
 std::string tdd::Soundex::encodedDigits(const std::string& word) const
@@ -36,15 +46,17 @@ std::string tdd::Soundex::encodedDigits(const std::string& word) const
     std::string encoding;
     for (auto letter : word) {
         if (isComplete(encoding)) break;
-        if (encodedDigit(letter) != lastDigit(encoding))
-            encoding += encodedDigit(letter);
+
+        auto digit = encodedDigit(letter);
+        if ((digit != NotADigit) && (digit != lastDigit(encoding)))
+            encoding += digit;
     }
     return encoding;
 }
 
 std::string tdd::Soundex::lastDigit(const std::string& encoding) const
 {
-    if (encoding.empty()) return "";
+    if (encoding.empty()) return NotADigit;
     else return std::string(1, encoding.back());
 }
 
