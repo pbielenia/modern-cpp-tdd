@@ -33,11 +33,19 @@ std::string tdd::Soundex::encodedDigit(char letter) const
 std::string tdd::Soundex::encodedDigits(const std::string& word) const
 {
     std::string encoding;
-    for (auto letter : word) encoding += encodedDigit(letter);
+    for (auto letter : word) {
+        if (isComplete(encoding)) break;
+        encoding += encodedDigit(letter);
+    }
     return encoding;
 }
 
 std::string tdd::Soundex::zeroPad(const std::string& word) const {
     auto zerosNeeded = max_code_length - word.length();
     return word + std::string(zerosNeeded, '0');
+}
+
+bool tdd::Soundex::isComplete(const std::string& encoding) const
+{
+    return (encoding.length() == (max_code_length - 1));
 }
