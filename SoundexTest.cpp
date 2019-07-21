@@ -29,7 +29,7 @@ TEST_F(SoundexEncoding, ReplacesMultipleConsonantsWithDigits) {
 }
 
 TEST_F(SoundexEncoding, LimitsLengthToFourCharacters) {
-    ASSERT_THAT(soundex.encode("Dcdlb"), Eq("D234"));
+    ASSERT_THAT(soundex.encode("Dcdlb").length(), Eq(4u));
 }
 
 TEST_F(SoundexEncoding, IgnoresVowelLikeLetters) {
