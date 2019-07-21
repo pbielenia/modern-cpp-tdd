@@ -3,7 +3,7 @@
 
 std::string tdd::Soundex::encode(const std::string& word) const
 {
-    return zeroPad(upperFront(head(word)) + encodedDigits(tail(word)));
+    return zeroPad(upperFront(head(word)) + tail(encodedDigits(word)));
 }
 
 std::string tdd::Soundex::upperFront(const std::string& string) const
@@ -44,7 +44,9 @@ std::string tdd::Soundex::encodedDigit(char letter) const
 std::string tdd::Soundex::encodedDigits(const std::string& word) const
 {
     std::string encoding;
-    for (auto letter : word) {
+    encoding += encodedDigit(word.front());
+
+    for (auto letter : tail(word)) {
         if (isComplete(encoding)) break;
 
         auto digit = encodedDigit(letter);
@@ -68,5 +70,5 @@ std::string tdd::Soundex::zeroPad(const std::string& word) const
 
 bool tdd::Soundex::isComplete(const std::string& encoding) const
 {
-    return (encoding.length() == (max_code_length - 1));
+    return (encoding.length() == max_code_length);
 }
