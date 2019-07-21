@@ -59,16 +59,17 @@ void tdd::Soundex::encodeHead(std::string& encoding, const std::string& word) co
 
 void tdd::Soundex::encodeTail(std::string& encoding, const std::string& word) const
 {
-    for (auto letter : tail(word)) {
+    for (auto i = 1u; i < word.length(); i++) {
         if (!isComplete(encoding))
-            encodeLetter(encoding, letter);
+            encodeLetter(encoding, word[i], word[i - 1]);
     }
 }
 
-void tdd::Soundex::encodeLetter(std::string& encoding, char letter) const
+void tdd::Soundex::encodeLetter(std::string& encoding, char letter, char lastLetter) const
 {
     auto digit = encodedDigit(letter);
-    if ((digit != NotADigit) && (digit != lastDigit(encoding)))
+    if ((digit != NotADigit) &&
+            ((digit != lastDigit(encoding) || isVowel(lastLetter))))
         encoding += digit;
 }
 
@@ -87,4 +88,10 @@ std::string tdd::Soundex::zeroPad(const std::string& word) const
 bool tdd::Soundex::isComplete(const std::string& encoding) const
 {
     return (encoding.length() == max_code_length);
+}
+
+bool tdd::Soundex::isVowel(char letter) const
+{
+    return
+        (std::string("aeiouy").find(lower(letter)) != std::string::npos);
 }
