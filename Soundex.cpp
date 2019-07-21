@@ -44,16 +44,32 @@ std::string tdd::Soundex::encodedDigit(char letter) const
 std::string tdd::Soundex::encodedDigits(const std::string& word) const
 {
     std::string encoding;
-    encoding += encodedDigit(word.front());
 
-    for (auto letter : tail(word)) {
-        if (isComplete(encoding)) break;
+    encodeHead(encoding, word);
+    encodeTail(encoding, word);
 
-        auto digit = encodedDigit(letter);
-        if ((digit != NotADigit) && (digit != lastDigit(encoding)))
-            encoding += digit;
-    }
+    
     return encoding;
+}
+
+void tdd::Soundex::encodeHead(std::string& encoding, const std::string& word) const
+{
+    encoding += encodedDigit(word.front());
+}
+
+void tdd::Soundex::encodeTail(std::string& encoding, const std::string& word) const
+{
+    for (auto letter : tail(word)) {
+        if (!isComplete(encoding))
+            encodeLetter(encoding, letter);
+    }
+}
+
+void tdd::Soundex::encodeLetter(std::string& encoding, char letter) const
+{
+    auto digit = encodedDigit(letter);
+    if ((digit != NotADigit) && (digit != lastDigit(encoding)))
+        encoding += digit;
 }
 
 std::string tdd::Soundex::lastDigit(const std::string& encoding) const
