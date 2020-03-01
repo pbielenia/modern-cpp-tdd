@@ -18,3 +18,10 @@ target_link_libraries(unit_tests
 )
 
 add_test(unit_tests unit_tests)
+
+add_custom_command(
+     TARGET unit_tests
+     COMMENT "Run tests"
+     POST_BUILD 
+     COMMAND ${CMAKE_BINARY_DIR}/unit_tests
+)
