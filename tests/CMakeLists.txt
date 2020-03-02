@@ -1,8 +1,7 @@
 cmake_minimum_required(VERSION 3.13)
 
-find_package(GTest)
-
 set(sources
+    main.cpp
     src/SoundexTest.cpp
 )
 
@@ -12,8 +11,8 @@ set_target_properties(unit_tests
         RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 target_link_libraries(unit_tests
     PUBLIC
-        GTest::GTest
-        GTest::Main
+        gtest
+        gmock
         ${PROJECT_NAME}-src
 )
 
