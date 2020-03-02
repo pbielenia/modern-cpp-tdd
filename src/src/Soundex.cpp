@@ -1,7 +1,7 @@
 #include <iostream>
 #include "Soundex.hpp"
 
-Soundex::Soundex()
+std::string Soundex::encode(const std::string& word) const
 {
-    std::cout << "Soundex ctor" << std::endl;
+    return word;
 }
