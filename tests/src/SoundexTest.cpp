@@ -1,11 +1,17 @@
 #include <gmock/gmock.h>
 #include "Soundex.hpp"
 
-using ::testing::Eq;
+using namespace testing;
 
-TEST(SoundexEncoding, RetainsSoleLetterOfOneLetterWord) {
-    auto soundex = Soundex();
-    auto encoded = soundex.encode("A");
+class SoundexEncoding : public Test {
+public:
+    Soundex soundex;
+};
 
-    ASSERT_THAT(encoded, Eq("A"));
+TEST_F(SoundexEncoding, RetainsSoleLetterOfOneLetterWord) {
+    ASSERT_THAT(soundex.encode("A"), Eq("A000"));
+}
+
+TEST_F(SoundexEncoding, PadsWithZerosToEnsureThreeDigits) {
+    ASSERT_THAT(soundex.encode("I"), Eq("I000"));
 }
