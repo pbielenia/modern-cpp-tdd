@@ -20,8 +20,9 @@ std::string Soundex::tail(const std::string& word) const
 
 std::string Soundex::encodedDigits(const std::string& word) const
 {
-    if (word.empty()) return "";
-    return encodedDigit(word.front());
+    auto encoding = std::string();
+    for (auto letter : word) encoding += encodedDigit(letter);
+    return encoding;
 }
 
 std::string Soundex::encodedDigit(char letter) const
