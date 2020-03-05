@@ -5,7 +5,7 @@ static const size_t max_code_length{4};
 
 std::string Soundex::encode(const std::string& word) const
 {
-    return zeroPad(head(word) + encodedDigits(tail(word)));
+    return zeroPad(upperFront(head(word)) + encodedDigits(tail(word)));
 }
 
 std::string Soundex::head(const std::string& word) const
@@ -22,6 +22,12 @@ std::string Soundex::lastDigit(const std::string& encoding) const
 {
     if (encoding.empty()) return "";
     return std::string(1, encoding.back());
+}
+
+std::string Soundex::upperFront(const std::string& string) const
+{
+    return std::string(1,
+        std::toupper(static_cast<unsigned char>(string.front())));
 }
 
 std::string Soundex::encodedDigits(const std::string& word) const

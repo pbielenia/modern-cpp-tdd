@@ -13,6 +13,7 @@ private:
     std::string head(const std::string& word) const;
     std::string tail(const std::string& word) const;
     std::string lastDigit(const std::string& encoding) const;
+    std::string upperFront(const std::string& string) const;
     std::string encodedDigits(const std::string& word) const;
     std::string zeroPad(const std::string& word) const;
     bool isComplete(const std::string& encoding) const;
