@@ -2,6 +2,7 @@
 #include <unordered_map>
 
 static const size_t max_code_length{4};
+static const std::string not_a_digit{"*"};
 
 std::string Soundex::encode(const std::string& word) const
 {
@@ -20,7 +21,7 @@ std::string Soundex::tail(const std::string& word) const
 
 std::string Soundex::lastDigit(const std::string& encoding) const
 {
-    if (encoding.empty()) return "";
+    if (encoding.empty()) return not_a_digit;
     return std::string(1, encoding.back());
 }
 
@@ -35,8 +36,9 @@ std::string Soundex::encodedDigits(const std::string& word) const
     auto encoding = std::string();
     for (auto letter : word) {
         if (isComplete(encoding)) break;
-        if (encodedDigit(letter) != lastDigit(encoding))
-            encoding += encodedDigit(letter);
+        auto const digit = encodedDigit(letter);
+        if ((digit != not_a_digit) && (digit != lastDigit(encoding)))
+            encoding += digit;
     }
     return encoding;
 }
@@ -53,7 +55,7 @@ std::string Soundex::encodedDigit(char letter) const
         {'r', "6"}
     };
     auto it = encodings.find(letter);
-    return it == encodings.end() ? "" :  it->second;
+    return it == encodings.end() ? not_a_digit :  it->second;
 }
 
 std::string Soundex::zeroPad(const std::string& word) const
