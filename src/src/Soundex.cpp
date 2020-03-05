@@ -54,7 +54,7 @@ std::string Soundex::encodedDigit(char letter) const
         {'m', "5"}, {'n', "5"},
         {'r', "6"}
     };
-    auto it = encodings.find(letter);
+    auto it = encodings.find(lower(letter));
     return it == encodings.end() ? not_a_digit :  it->second;
 }
 
@@ -67,4 +67,9 @@ std::string Soundex::zeroPad(const std::string& word) const
 bool Soundex::isComplete(const std::string& encoding) const
 {
     return encoding.length() == (max_code_length - 1);
+}
+
+char Soundex::lower(char c) const
+{
+    return std::tolower(static_cast<unsigned char>(c));
 }
