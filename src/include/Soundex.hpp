@@ -14,5 +14,6 @@ private:
     std::string encodedDigits(const std::string& word) const;
     std::string encodedDigit(char letter) const;
     std::string zeroPad(const std::string& word) const;
+    bool isComplete(const std::string& encoding) const;
 
 };
