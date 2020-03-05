@@ -18,12 +18,19 @@ std::string Soundex::tail(const std::string& word) const
     return word.substr(1);
 }
 
+std::string Soundex::lastDigit(const std::string& encoding) const
+{
+    if (encoding.empty()) return "";
+    return std::string(1, encoding.back());
+}
+
 std::string Soundex::encodedDigits(const std::string& word) const
 {
     auto encoding = std::string();
     for (auto letter : word) {
         if (isComplete(encoding)) break;
-        else encoding += encodedDigit(letter);
+        if (encodedDigit(letter) != lastDigit(encoding))
+            encoding += encodedDigit(letter);
     }
     return encoding;
 }
