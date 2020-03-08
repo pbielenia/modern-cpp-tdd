@@ -18,5 +18,8 @@ private:
     std::string zeroPad(const std::string& word) const;
     bool isComplete(const std::string& encoding) const;
     char lower(char c) const;
+    void encodeHead(std::string& encoding, const std::string& word) const;
+    void encodeTail(std::string& encoding, const std::string& word) const;
+    void encodeLetter(std::string& encoding, char letter) const;
 
 };
